@@ -59,10 +59,7 @@ export default function Home() {
           setFileName(file.name);
           setStep(1);
           setUploadModal(false);
-        } catch (error) {
-          console.error("Error parsing JSON file:", error);
-          // Handle error accordingly, e.g., show an error message
-        }
+        } catch (error) {}
       };
 
       reader.readAsText(file);
