@@ -136,7 +136,7 @@ export default function Home() {
           <div>
             <div ref={viewRef} className="max-h-[500px] overflow-y-auto">
               {q?.alts.map((alt, i) => (
-                <div key={i} className="card mx-auto p-7">
+                <div key={i} className="card mx-auto p-3">
                   <div dir="rtl">{alt}</div>
                 </div>
               ))}
