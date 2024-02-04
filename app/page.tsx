@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 type Question = {
   question: string;
   test_answer: string;
+  sanad_service_id: number;
   alts: string[];
 };
 
@@ -13,7 +14,9 @@ export default function Home() {
   const [q, setq] = useState<Question | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [input, setInput] = useState("");
+  const [service, setService] = useState<any>(null);
   const viewRef = useRef<HTMLDivElement>(null);
+
   const setAllApplicationStateToLocalStorage = (state: Record<any, any>) => {
     for (const key in state) {
       localStorage.setItem(key, JSON.stringify(state[key]));
@@ -82,6 +85,22 @@ export default function Home() {
       block: "end",
     });
   }, [faq]);
+  useEffect(() => {
+    // auto scroll to the bottom of the alternatives
+    if (q) {
+      const options = { method: "GET" };
+      fetch(
+        "https://bot-designer-server-2.azurewebsites.net/api/sanad/service?sanad_service_id=" +
+          q.sanad_service_id,
+        options
+      )
+        .then((response) => response.json())
+        .then((response) => {
+          setService(response);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [q]);
 
   return (
     <main className=" min-h-screen ">
@@ -115,6 +134,25 @@ export default function Home() {
               {step} / {faq.length}
             </span>
           )}
+          <label htmlFor="my_modal_6" className="btn btn-sm mx-3  btn-warning">
+            More Info
+          </label>
+
+          <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+          <div className=" modal  modal-bottom sm:modal-middle" role="dialog">
+            <div className="modal-box ">
+              <h3 className="font-bold text-lg ">Service</h3>
+              {/* {JSON.stringify(service, null, 1)} */}
+              <p>ID: {service?.sanad_service_id}</p>
+              <p>Service Title: {service?.title}</p>
+
+              <div className="modal-action">
+                <label htmlFor="my_modal_6" className="btn">
+                  Close!
+                </label>
+              </div>
+            </div>
+          </div>
         </div>
         <button onClick={handleExportFAQ} className="btn btn-secondary">
           Export FAQ
@@ -201,7 +239,7 @@ export default function Home() {
                     setq(faq[step]);
                   }
                 }}
-                className="join-item btn btn-outline "
+                className="join-item btn btn-outline"
               >
                 Next
               </button>
