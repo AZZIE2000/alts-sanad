@@ -251,7 +251,21 @@ export default function Home() {
                     >
                       DEL
                     </span>
-                    <span>{alt}</span>
+                    <span
+                      onBlur={(e) => {
+                        if (faq) {
+                          const newAlts = q.alts;
+                          newAlts[i] = e.target.textContent as string;
+                          setq({ ...q, alts: newAlts });
+                          const newFaqs = faq;
+                          newFaqs[step - 1] = q;
+                          setFaq(newFaqs);
+                        }
+                      }}
+                      contentEditable
+                    >
+                      {alt}
+                    </span>
                   </div>
                 </div>
               ))}
