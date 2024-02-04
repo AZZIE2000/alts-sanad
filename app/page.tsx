@@ -163,9 +163,41 @@ export default function Home() {
           <div className="card mx-auto p-7">
             <div>Main question</div>
             <div dir="rtl">{q?.question}</div>
+            <div className="collapse bg-base-200 my-2">
+              <input type="checkbox" />
+              <div className="collapse-title text-lg font-medium">
+                More Questions found with the same service ID
+              </div>
+              <div className="collapse-content">
+                {faq
+                  ?.filter((f) => f.sanad_service_id === q.sanad_service_id)
+                  .map((f, i) => (
+                    <>
+                      <div>{f.question}</div>
+                      <hr />
+                    </>
+                  ))}
+              </div>
+            </div>
             <hr />
             <div>Answer</div>
             <div dir="rtl">{q?.test_answer}</div>
+            <div className="collapse bg-base-200 my-2">
+              <input type="checkbox" />
+              <div className="collapse-title text-lg font-medium">
+                More Answers found with the same service ID
+              </div>
+              <div className="collapse-content">
+                {faq
+                  ?.filter((f) => f.sanad_service_id === q.sanad_service_id)
+                  .map((f, i) => (
+                    <>
+                      <div>{f.test_answer}</div>
+                      <hr />
+                    </>
+                  ))}
+              </div>
+            </div>
           </div>
           <hr />
           <div className="flex w-full justify-center text-xl font-bold">
