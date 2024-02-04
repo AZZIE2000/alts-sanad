@@ -137,7 +137,24 @@ export default function Home() {
             <div ref={viewRef} className="max-h-[500px] overflow-y-auto">
               {q?.alts.map((alt, i) => (
                 <div key={i} className="card mx-auto p-3">
-                  <div dir="rtl">{alt}</div>
+                  <div dir="rtl">
+                    <span
+                      onClick={() => {
+                        if (faq) {
+                          const newAlts = q.alts;
+                          newAlts.splice(i, 1);
+                          setq({ ...q, alts: newAlts });
+                          const newFaqs = faq;
+                          newFaqs[step - 1] = q;
+                          setFaq(newFaqs);
+                        }
+                      }}
+                      className="btn mx-3 btn-circle btn-sm text-xs btn-error"
+                    >
+                      DEL
+                    </span>
+                    <span>{alt}</span>
+                  </div>
                 </div>
               ))}
             </div>
