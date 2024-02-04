@@ -163,6 +163,34 @@ export default function Home() {
           <div className="card mx-auto p-7">
             <div>Main question</div>
             <div dir="rtl">{q?.question}</div>
+            {q && faq && (
+              <div
+                className={`${
+                  faq?.filter(
+                    (f) =>
+                      f.question === q.question &&
+                      f.sanad_service_id === q.sanad_service_id
+                  )?.length > 1
+                    ? "text-red-500"
+                    : "text-green-500"
+                }`}
+              >
+                {
+                  faq?.filter(
+                    (f) =>
+                      f.question === q.question &&
+                      f.sanad_service_id === q.sanad_service_id
+                  ).length
+                }{" "}
+                {faq?.filter(
+                  (f) =>
+                    f.question === q.question &&
+                    f.sanad_service_id === q.sanad_service_id
+                ).length > 1
+                  ? "Conflict"
+                  : "No Conflict"}
+              </div>
+            )}
             <div className="collapse bg-base-200 my-2">
               <input type="checkbox" />
               <div className="collapse-title text-lg font-medium">
